@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# production
+build/
+
+# env files
+.env
+.env*.local
+
+# database
+prisma/dev.db
+prisma/dev.db-journal
+
+# debug
+npm-debug.log*
+
+# misc
+.DS_Store
+*.tgz
+
+# local claude config
+.claude/settings.local.json
+CLAUDE.local.md

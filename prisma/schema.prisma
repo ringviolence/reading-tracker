@@ -1,0 +1,69 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id          String           @id @default(cuid())
+  email       String           @unique
+  password    String
+  name        String?
+  readingGoal Int              @default(20)
+  createdAt   DateTime         @default(now())
+  books       Book[]
+  sessions    ReadingSession[]
+  badges      UserBadge[]
+  authSessions Session[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Book {
+  id          String           @id @default(cuid())
+  userId      String
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title       String
+  author      String
+  genre       String
+  totalPages  Int
+  currentPage Int              @default(0)
+  coverImage  String?
+  isbn        String?
+  status      String           @default("READING")
+  createdAt   DateTime         @default(now())
+  completedAt DateTime?
+  sessions    ReadingSession[]
+}
+
+model ReadingSession {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bookId       String
+  book         Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  date         DateTime @default(now())
+  startPage    Int
+  endPage      Int
+  pagesRead    Int
+  pointsEarned Int
+}
+
+model UserBadge {
+  id       String   @id @default(cuid())
+  userId   String
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  badgeId  String
+  earnedAt DateTime @default(now())
+
+  @@unique([userId, badgeId])
+}
