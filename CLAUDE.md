@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Reading Tracker is a full-stack Next.js 14 (App Router) application for tracking books, logging reading sessions, earning points, and collecting achievement badges. Uses TypeScript, Tailwind CSS, Prisma ORM with SQLite, and custom session-based authentication.
+Reading Tracker is a full-stack Next.js 14 (App Router) application for tracking books, logging reading sessions, earning points, and collecting achievement badges. Uses TypeScript, Tailwind CSS, Prisma ORM with PostgreSQL (Vercel Postgres in production), and custom session-based authentication. Deployed on Vercel.
 
 ## Commands
 
@@ -30,7 +30,7 @@ No test framework is configured.
 - `streaks.ts` — Reading streak calculation (consecutive days)
 - `db.ts` — Singleton Prisma client
 
-**Database** (`prisma/schema.prisma`): SQLite with models for User, Session (auth), Book, ReadingSession, and UserBadge. Path alias `@/*` maps to `./src/*`.
+**Database** (`prisma/schema.prisma`): PostgreSQL (Vercel Postgres in production) with models for User, Session (auth), Book, ReadingSession, and UserBadge. Requires `DATABASE_URL` environment variable. Path alias `@/*` maps to `./src/*`.
 
 **Types** (`src/types/index.ts`): Shared types including `BookStatus`, `Genre` (23 genres in fiction/non-fiction/other groups), `BadgeTier`, `BadgeCategory`, and genre arrays/labels.
 
@@ -40,3 +40,10 @@ No test framework is configured.
 - Badge awarding happens in the `POST /api/sessions` route after logging a reading session
 - Books use string status values ("READING" / "COMPLETED"), not an enum
 - Auth cookies use `sameSite: 'lax'`, secure only in production
+
+## Deployment
+
+Deployed on Vercel with Vercel Postgres. To deploy:
+1. `npx vercel` to link and deploy
+2. Set `DATABASE_URL` in Vercel environment variables (provided by Vercel Postgres)
+3. Run `npx prisma db push` to create/update tables in production
