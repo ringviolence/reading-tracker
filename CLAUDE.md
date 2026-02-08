@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Reading Tracker is a full-stack Next.js 14 (App Router) application for tracking books, logging reading sessions, earning points, and collecting achievement badges. Uses TypeScript, Tailwind CSS, Prisma ORM with PostgreSQL (Vercel Postgres in production), and custom session-based authentication. Deployed on Vercel.
+Reading Tracker is a full-stack Next.js 14 (App Router) application for tracking books, logging reading sessions, earning points, and collecting achievement badges. Uses TypeScript, Tailwind CSS, Prisma ORM with PostgreSQL (Neon in production), and custom session-based authentication. Deployed on Vercel.
 
 ## Commands
 
@@ -30,7 +30,7 @@ No test framework is configured.
 - `streaks.ts` — Reading streak calculation (consecutive days)
 - `db.ts` — Singleton Prisma client
 
-**Database** (`prisma/schema.prisma`): PostgreSQL (Vercel Postgres in production) with models for User, Session (auth), Book, ReadingSession, and UserBadge. Requires `DATABASE_URL` environment variable. Path alias `@/*` maps to `./src/*`.
+**Database** (`prisma/schema.prisma`): PostgreSQL (Neon in production) with models for User, Session (auth), Book, ReadingSession, and UserBadge. Requires `DATABASE_URL` environment variable (set automatically via Vercel). Path alias `@/*` maps to `./src/*`.
 
 **Types** (`src/types/index.ts`): Shared types including `BookStatus`, `Genre` (23 genres in fiction/non-fiction/other groups), `BadgeTier`, `BadgeCategory`, and genre arrays/labels.
 
@@ -43,7 +43,10 @@ No test framework is configured.
 
 ## Deployment
 
-Deployed on Vercel with Vercel Postgres. To deploy:
-1. `npx vercel` to link and deploy
-2. Set `DATABASE_URL` in Vercel environment variables (provided by Vercel Postgres)
-3. Run `npx prisma db push` to create/update tables in production
+Production URL: https://reading-tracker-eight-theta.vercel.app
+
+Deployed on Vercel with Neon Postgres (database: `neon-blue-window`). Environment variables including `DATABASE_URL` are set automatically via the Vercel–Neon integration.
+
+- `npx vercel --prod` — Deploy to production
+- `npx vercel env pull .env.local` — Pull production env vars for local development
+- `npx prisma db push` — Sync schema changes to the database

@@ -26,3 +26,4 @@ npm-debug.log*
 # local claude config
 .claude/settings.local.json
 CLAUDE.local.md
+.vercel
