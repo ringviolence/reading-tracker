@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { bookId, endPage } = body;
+    const { bookId, endPage, date } = body;
 
     if (!bookId || endPage === undefined) {
       return NextResponse.json(
@@ -52,10 +52,13 @@ export async function POST(request: NextRequest) {
     const bookCompleted = endPageNum >= book.totalPages;
     const pointsEarned = calculateSessionPoints(pagesRead, bookCompleted);
 
+    const sessionDate = date ? new Date(date) : new Date();
+
     const session = await prisma.readingSession.create({
       data: {
         userId: user.id,
         bookId,
+        date: sessionDate,
         startPage: book.currentPage,
         endPage: endPageNum,
         pagesRead,
@@ -68,7 +71,7 @@ export async function POST(request: NextRequest) {
       data: {
         currentPage: endPageNum,
         ...(bookCompleted
-          ? { status: 'COMPLETED', completedAt: new Date() }
+          ? { status: 'COMPLETED', completedAt: sessionDate }
           : {}),
       },
     });

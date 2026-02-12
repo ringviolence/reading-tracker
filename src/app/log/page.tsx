@@ -18,6 +18,7 @@ export default function LogReadingPage() {
   const [books, setBooks] = useState<Book[]>([]);
   const [selectedBookId, setSelectedBookId] = useState('');
   const [currentPage, setCurrentPage] = useState<number | ''>('');
+  const [date, setDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -57,6 +58,7 @@ export default function LogReadingPage() {
         body: JSON.stringify({
           bookId: selectedBookId,
           endPage: currentPage,
+          date: date !== new Date().toISOString().split('T')[0] ? date : undefined,
         }),
       });
 
@@ -126,6 +128,21 @@ export default function LogReadingPage() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow p-6 space-y-6">
+          <div>
+            <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
+              Date
+            </label>
+            <input
+              type="date"
+              id="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+              max={new Date().toISOString().split('T')[0]}
+              required
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            />
+          </div>
+
           <div>
             <label htmlFor="book" className="block text-sm font-medium text-gray-700 mb-1">
               Select Book
