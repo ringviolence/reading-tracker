@@ -67,6 +67,7 @@ async function main() {
       data: {
         userId: testUser.id,
         title: 'Sapiens',
+        subtitle: 'A Brief History of Humankind',
         author: 'Yuval Noah Harari',
         genre: 'HISTORY',
         totalPages: 443,

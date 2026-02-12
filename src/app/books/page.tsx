@@ -54,6 +54,7 @@ export default async function BooksPage() {
                 key={book.id}
                 id={book.id}
                 title={book.title}
+                subtitle={book.subtitle}
                 author={book.author}
                 genre={book.genre}
                 currentPage={book.currentPage}
@@ -77,6 +78,7 @@ export default async function BooksPage() {
                 key={book.id}
                 id={book.id}
                 title={book.title}
+                subtitle={book.subtitle}
                 author={book.author}
                 genre={book.genre}
                 currentPage={book.currentPage}

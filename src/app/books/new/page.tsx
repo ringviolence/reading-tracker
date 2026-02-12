@@ -17,6 +17,7 @@ export default function NewBookPage() {
     const formData = new FormData(e.currentTarget);
     const data = {
       title: formData.get('title') as string,
+      subtitle: (formData.get('subtitle') as string) || undefined,
       author: formData.get('author') as string,
       genre: formData.get('genre') as string,
       totalPages: parseInt(formData.get('totalPages') as string, 10),
@@ -72,6 +73,19 @@ export default function NewBookPage() {
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="Enter book title"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="subtitle" className="block text-sm font-medium text-gray-700 mb-1">
+            Subtitle (optional)
+          </label>
+          <input
+            type="text"
+            id="subtitle"
+            name="subtitle"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            placeholder="Enter subtitle"
           />
         </div>
 

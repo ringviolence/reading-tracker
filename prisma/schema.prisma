@@ -33,6 +33,7 @@ model Book {
   userId      String
   user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
   title       String
+  subtitle    String?
   author      String
   genre       String
   totalPages  Int

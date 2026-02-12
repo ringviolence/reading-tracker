@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json();
-    const { title, author, genre, totalPages, isbn, coverImage } = body;
+    const { title, subtitle, author, genre, totalPages, isbn, coverImage } = body;
 
     if (!title || !author || !genre || !totalPages) {
       return NextResponse.json(
@@ -45,6 +45,7 @@ export async function POST(request: NextRequest) {
       data: {
         userId: user.id,
         title,
+        subtitle: subtitle || null,
         author,
         genre,
         totalPages: parseInt(totalPages, 10),

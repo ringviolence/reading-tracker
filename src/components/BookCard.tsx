@@ -6,6 +6,7 @@ import { GENRE_LABELS, Genre } from '@/types';
 interface BookCardProps {
   id: string;
   title: string;
+  subtitle?: string | null;
   author: string;
   genre: string;
   currentPage: number;
@@ -16,6 +17,7 @@ interface BookCardProps {
 
 export default function BookCard({
   title,
+  subtitle,
   author,
   genre,
   currentPage,
@@ -42,6 +44,7 @@ export default function BookCard({
         )}
         <div className="flex-1 min-w-0">
           <h3 className="font-semibold text-gray-900 truncate">{title}</h3>
+          {subtitle && <p className="text-sm text-gray-500 truncate">{subtitle}</p>}
           <p className="text-sm text-gray-600 truncate">{author}</p>
           <p className="text-xs text-gray-400 mt-1">{genreLabel}</p>
           {isCompleted ? (
