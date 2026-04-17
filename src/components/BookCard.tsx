@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+import Link from 'next/link';
 import ProgressBar from './ProgressBar';
 import { GENRE_LABELS, Genre } from '@/types';
 
@@ -13,9 +15,11 @@ interface BookCardProps {
   totalPages: number;
   status: string;
   coverImage?: string | null;
+  isbn?: string | null;
 }
 
 export default function BookCard({
+  id,
   title,
   subtitle,
   author,
@@ -24,18 +28,22 @@ export default function BookCard({
   totalPages,
   status,
   coverImage,
+  isbn,
 }: BookCardProps) {
+  const [imgError, setImgError] = useState(false);
   const isCompleted = status === 'COMPLETED';
   const genreLabel = GENRE_LABELS[genre as Genre] || genre;
+  const coverSrc = coverImage || (isbn ? `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg` : null);
 
   return (
-    <div className="bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow">
+    <Link href={`/books/${id}`} className="block bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow">
       <div className="flex gap-4">
-        {coverImage ? (
+        {coverSrc && !imgError ? (
           <img
-            src={coverImage}
+            src={coverSrc}
             alt={title}
             className="w-16 h-24 object-cover rounded"
+            onError={() => setImgError(true)}
           />
         ) : (
           <div className="w-16 h-24 bg-gradient-to-br from-blue-400 to-purple-500 rounded flex items-center justify-center">
@@ -63,6 +71,6 @@ export default function BookCard({
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

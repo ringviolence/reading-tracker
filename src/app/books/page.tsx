@@ -61,6 +61,7 @@ export default async function BooksPage() {
                 totalPages={book.totalPages}
                 status={book.status}
                 coverImage={book.coverImage}
+                isbn={book.isbn}
               />
             ))}
           </div>
@@ -85,6 +86,7 @@ export default async function BooksPage() {
                 totalPages={book.totalPages}
                 status={book.status}
                 coverImage={book.coverImage}
+                isbn={book.isbn}
               />
             ))}
           </div>

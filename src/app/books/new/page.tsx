@@ -22,7 +22,6 @@ export default function NewBookPage() {
       genre: formData.get('genre') as string,
       totalPages: parseInt(formData.get('totalPages') as string, 10),
       isbn: (formData.get('isbn') as string) || undefined,
-      coverImage: (formData.get('coverImage') as string) || undefined,
     };
 
     try {
@@ -163,19 +162,6 @@ export default function NewBookPage() {
             name="isbn"
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             placeholder="Enter ISBN"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="coverImage" className="block text-sm font-medium text-gray-700 mb-1">
-            Cover Image URL (optional)
-          </label>
-          <input
-            type="url"
-            id="coverImage"
-            name="coverImage"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            placeholder="Enter cover image URL"
           />
         </div>
 
