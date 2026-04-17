@@ -59,6 +59,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
       genre: formData.get('genre') as string,
       totalPages: parseInt(formData.get('totalPages') as string, 10),
       isbn: (formData.get('isbn') as string) || undefined,
+      coverImage: (formData.get('coverImage') as string) || undefined,
     };
 
     try {
@@ -312,6 +313,19 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                 name="isbn"
                 defaultValue={book.isbn || ''}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label htmlFor="coverImage" className="block text-sm font-medium text-gray-700 mb-1">
+                Cover Image URL (optional, overrides ISBN lookup)
+              </label>
+              <input
+                type="url"
+                id="coverImage"
+                name="coverImage"
+                defaultValue={book.coverImage || ''}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="https://..."
               />
             </div>
             <div className="flex gap-3">
