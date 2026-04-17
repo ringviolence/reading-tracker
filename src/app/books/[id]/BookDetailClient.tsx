@@ -341,11 +341,11 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                     <img
                       src={coverSrc}
                       alt={book.title}
-                      className="w-20 h-30 object-cover rounded"
+                      className="w-20 h-28 object-cover rounded"
                       onError={() => setImgError(true)}
                     />
                   ) : (
-                    <div className="w-20 h-30 bg-gradient-to-br from-blue-400 to-purple-500 rounded flex items-center justify-center">
+                    <div className="w-20 h-28 bg-gradient-to-br from-blue-400 to-purple-500 rounded flex items-center justify-center">
                       <span className="text-white text-3xl font-bold">{book.title[0]}</span>
                     </div>
                   );
