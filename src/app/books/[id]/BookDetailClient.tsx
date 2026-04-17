@@ -336,7 +336,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
             <div className="flex items-start justify-between mb-4">
               <div className="flex gap-4">
                 {(() => {
-                  const coverSrc = book.coverImage || (book.isbn ? `https://covers.openlibrary.org/b/isbn/${book.isbn}-L.jpg` : null);
+                  const coverSrc = book.coverImage || (book.isbn ? `https://covers.openlibrary.org/b/isbn/${book.isbn}-L.jpg?default=false` : null);
                   return coverSrc && !imgError ? (
                     <img
                       src={coverSrc}

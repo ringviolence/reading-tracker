@@ -33,7 +33,7 @@ export default function BookCard({
   const [imgError, setImgError] = useState(false);
   const isCompleted = status === 'COMPLETED';
   const genreLabel = GENRE_LABELS[genre as Genre] || genre;
-  const coverSrc = coverImage || (isbn ? `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg` : null);
+  const coverSrc = coverImage || (isbn ? `https://covers.openlibrary.org/b/isbn/${isbn}-L.jpg?default=false` : null);
 
   return (
     <Link href={`/books/${id}`} className="block bg-white rounded-lg shadow p-4 hover:shadow-md transition-shadow">
