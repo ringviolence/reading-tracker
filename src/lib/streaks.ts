@@ -9,13 +9,9 @@ export function calculateStreak(sessionDates: Date[]): number {
 
   const sortedDays = Array.from(uniqueDays).sort().reverse();
 
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const todayKey = today.toISOString().split('T')[0];
-
-  const yesterday = new Date(today);
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yesterdayKey = yesterday.toISOString().split('T')[0];
+  const todayKey = new Date().toISOString().split('T')[0];
+  const [ty, tm, td] = todayKey.split('-').map(Number);
+  const yesterdayKey = new Date(Date.UTC(ty, tm - 1, td - 1)).toISOString().split('T')[0];
 
   if (sortedDays[0] !== todayKey && sortedDays[0] !== yesterdayKey) {
     return 0;
@@ -41,14 +37,8 @@ export function calculateStreak(sessionDates: Date[]): number {
 }
 
 export function getTodayPages(sessions: { date: Date; pagesRead: number }[]): number {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-
+  const todayKey = new Date().toISOString().split('T')[0];
   return sessions
-    .filter((session) => {
-      const sessionDate = new Date(session.date);
-      sessionDate.setHours(0, 0, 0, 0);
-      return sessionDate.getTime() === today.getTime();
-    })
+    .filter((session) => new Date(session.date).toISOString().split('T')[0] === todayKey)
     .reduce((sum, session) => sum + session.pagesRead, 0);
 }

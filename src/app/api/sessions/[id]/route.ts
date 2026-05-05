@@ -32,7 +32,7 @@ export async function PATCH(
 
     const updated = await prisma.readingSession.update({
       where: { id },
-      data: { date: new Date(date) },
+      data: { date: new Date(`${date}T00:00:00.000Z`) },
     });
 
     return NextResponse.json(updated);

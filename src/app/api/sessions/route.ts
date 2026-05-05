@@ -52,7 +52,8 @@ export async function POST(request: NextRequest) {
     const bookCompleted = endPageNum >= book.totalPages;
     const pointsEarned = calculateSessionPoints(pagesRead, bookCompleted);
 
-    const sessionDate = date ? new Date(date) : new Date();
+    const dateStr = date || new Date().toISOString().split('T')[0];
+    const sessionDate = new Date(`${dateStr}T00:00:00.000Z`);
 
     const session = await prisma.readingSession.create({
       data: {

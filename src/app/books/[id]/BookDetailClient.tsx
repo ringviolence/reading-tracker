@@ -192,15 +192,16 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
   }
 
   function formatDate(dateStr: string) {
-    return new Date(dateStr).toLocaleDateString('en-US', {
+    return new Date(dateStr.substring(0, 10) + 'T00:00:00Z').toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric',
+      timeZone: 'UTC',
     });
   }
 
   function toInputDate(dateStr: string) {
-    return new Date(dateStr).toISOString().split('T')[0];
+    return dateStr.substring(0, 10);
   }
 
   return (
