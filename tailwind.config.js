@@ -8,14 +8,14 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        sage: '#D7E4B4',
+        sage: 'var(--color-sage)',
         forest: {
-          DEFAULT: '#5B7553',
-          dark: '#4a6044',
+          DEFAULT: 'var(--color-forest)',
+          dark: 'var(--color-forest-dark)',
         },
-        ink: '#0A210F',
-        sky: '#C5EAFB',
-        lavender: '#CFBAE1',
+        ink: 'var(--color-ink)',
+        sky: 'var(--color-sky)',
+        lavender: 'var(--color-lavender)',
       },
     },
   },
