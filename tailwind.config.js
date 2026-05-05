@@ -6,7 +6,18 @@ module.exports = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        sage: '#D7E4B4',
+        forest: {
+          DEFAULT: '#5B7553',
+          dark: '#4a6044',
+        },
+        ink: '#0A210F',
+        sky: '#C5EAFB',
+        lavender: '#CFBAE1',
+      },
+    },
   },
   plugins: [],
 }

@@ -60,25 +60,48 @@ export default async function Dashboard() {
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+        <h1 className="text-3xl font-bold text-ink">Dashboard</h1>
         <Link
           href="/log"
-          className="px-6 py-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors font-medium"
+          className="px-6 py-3 bg-forest text-white rounded-lg hover:bg-forest-dark transition-colors font-medium"
         >
           Log Reading
         </Link>
       </div>
 
       <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">{stats.monthName}</h2>
+        <h2 className="text-lg font-semibold text-ink mb-4">{stats.monthName}</h2>
         <ProgressBar
           current={stats.monthlyPages}
           total={stats.monthlyGoal}
           label={`${stats.monthlyGoal} pages this month (${stats.user.readingGoal}/day)`}
-          color="bg-green-500"
+          color="bg-forest"
           size="lg"
         />
       </div>
+
+      {stats.currentlyReadingBooks.length > 0 && (
+        <div>
+          <h2 className="text-xl font-semibold text-ink mb-4">Currently Reading</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {stats.currentlyReadingBooks.map((book) => (
+              <BookCard
+                key={book.id}
+                id={book.id}
+                title={book.title}
+                subtitle={book.subtitle}
+                author={book.author}
+                genre={book.genre}
+                currentPage={book.currentPage}
+                totalPages={book.totalPages}
+                status={book.status}
+                coverImage={book.coverImage}
+                isbn={book.isbn}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
@@ -103,35 +126,12 @@ export default async function Dashboard() {
         />
       </div>
 
-      {stats.currentlyReadingBooks.length > 0 && (
-        <div>
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">Currently Reading</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {stats.currentlyReadingBooks.map((book) => (
-              <BookCard
-                key={book.id}
-                id={book.id}
-                title={book.title}
-                subtitle={book.subtitle}
-                author={book.author}
-                genre={book.genre}
-                currentPage={book.currentPage}
-                totalPages={book.totalPages}
-                status={book.status}
-                coverImage={book.coverImage}
-                isbn={book.isbn}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Link
           href="/books/new"
           className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow group"
         >
-          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-green-600">
+          <h3 className="text-lg font-semibold text-ink group-hover:text-forest">
             Add a Book
           </h3>
           <p className="text-gray-500 mt-1">Start tracking a new book</p>
@@ -140,7 +140,7 @@ export default async function Dashboard() {
           href="/badges"
           className="bg-white rounded-lg shadow p-6 hover:shadow-md transition-shadow group"
         >
-          <h3 className="text-lg font-semibold text-gray-900 group-hover:text-green-600">
+          <h3 className="text-lg font-semibold text-ink group-hover:text-forest">
             View Badges
           </h3>
           <p className="text-gray-500 mt-1">

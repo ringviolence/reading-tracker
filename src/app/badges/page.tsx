@@ -67,7 +67,7 @@ export default async function BadgesPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Badges</h1>
+        <h1 className="text-3xl font-bold text-ink">Badges</h1>
         <p className="text-gray-500 mt-1">
           You&apos;ve earned {totalEarned} badge{totalEarned !== 1 ? 's' : ''}
         </p>

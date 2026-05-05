@@ -11,7 +11,7 @@ export default function StatsCard({ title, value, subtitle, icon }: StatsCardPro
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm text-gray-500">{title}</p>
-          <p className="text-3xl font-bold text-gray-900">{value}</p>
+          <p className="text-3xl font-bold text-ink">{value}</p>
           {subtitle && <p className="text-sm text-gray-400 mt-1">{subtitle}</p>}
         </div>
         {icon && <div className="text-4xl text-gray-300">{icon}</div>}

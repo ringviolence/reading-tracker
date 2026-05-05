@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import BadgeCelebration from '@/components/BadgeCelebration';
 import { BadgeDefinition } from '@/types';
 
@@ -15,8 +15,9 @@ interface Book {
 
 export default function LogReadingPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [books, setBooks] = useState<Book[]>([]);
-  const [selectedBookId, setSelectedBookId] = useState('');
+  const [selectedBookId, setSelectedBookId] = useState(searchParams.get('bookId') ?? '');
   const [currentPage, setCurrentPage] = useState<number | ''>('');
   const [date, setDate] = useState(() => new Date().toISOString().split('T')[0]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -101,7 +102,7 @@ export default function LogReadingPage() {
   if (isLoading) {
     return (
       <div className="max-w-2xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">Log Reading Session</h1>
+        <h1 className="text-3xl font-bold text-ink mb-8">Log Reading Session</h1>
         <div className="bg-white rounded-lg shadow p-8 text-center text-gray-500">
           Loading...
         </div>
@@ -111,7 +112,7 @@ export default function LogReadingPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Log Reading Session</h1>
+      <h1 className="text-3xl font-bold text-ink mb-8">Log Reading Session</h1>
 
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
@@ -122,7 +123,7 @@ export default function LogReadingPage() {
       {books.length === 0 ? (
         <div className="bg-white rounded-lg shadow p-8 text-center">
           <p className="text-gray-500 mb-4">No books currently in progress.</p>
-          <a href="/books/new" className="text-blue-500 hover:underline">
+          <a href="/books/new" className="text-forest hover:underline">
             Add a book to start tracking
           </a>
         </div>
@@ -139,7 +140,7 @@ export default function LogReadingPage() {
               onChange={(e) => setDate(e.target.value)}
               max={new Date().toISOString().split('T')[0]}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
             />
           </div>
 
@@ -155,7 +156,7 @@ export default function LogReadingPage() {
                 setCurrentPage('');
               }}
               required
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
             >
               <option value="">Choose a book...</option>
               {books.map((book) => (
@@ -189,22 +190,22 @@ export default function LogReadingPage() {
                   required
                   min={selectedBook.currentPage + 1}
                   max={selectedBook.totalPages}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
                   placeholder={`Enter page (${selectedBook.currentPage + 1}-${selectedBook.totalPages})`}
                 />
               </div>
 
               {pagesRead > 0 && (
-                <div className="bg-blue-50 rounded-lg p-4">
-                  <p className="text-blue-700">
+                <div className="bg-sky/30 rounded-lg p-4">
+                  <p className="text-ink">
                     Pages read this session: <span className="font-bold">{pagesRead}</span>
                   </p>
-                  <p className="text-blue-600 text-sm mt-1">
+                  <p className="text-ink/70 text-sm mt-1">
                     Points earned: {pagesRead}
                     {willComplete && ' + 50 (book completed!)'}
                   </p>
                   {willComplete && (
-                    <p className="text-green-600 font-medium mt-2">
+                    <p className="text-forest font-medium mt-2">
                       Congratulations! You will complete this book!
                     </p>
                   )}
@@ -217,7 +218,7 @@ export default function LogReadingPage() {
             <button
               type="submit"
               disabled={isSubmitting || !selectedBookId || currentPage === '' || pagesRead <= 0}
-              className="flex-1 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+              className="flex-1 px-6 py-3 bg-forest text-white rounded-lg hover:bg-forest-dark transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Logging...' : 'Log Reading'}
             </button>

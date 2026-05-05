@@ -40,7 +40,7 @@ export default function BadgeCategory({
       >
         <div className="flex-1">
           <div className="flex items-center gap-2">
-            <h3 className="font-semibold text-gray-900">{name}</h3>
+            <h3 className="font-semibold text-ink">{name}</h3>
             <span className="text-sm text-gray-500">
               ({earnedCount}/{totalCount})
             </span>
@@ -48,7 +48,7 @@ export default function BadgeCategory({
           <p className="text-sm text-gray-500">{description}</p>
           <div className="mt-2 w-full bg-gray-200 rounded-full h-2">
             <div
-              className="bg-blue-500 h-2 rounded-full transition-all duration-300"
+              className="bg-forest h-2 rounded-full transition-all duration-300"
               style={{ width: `${progressPercent}%` }}
             />
           </div>

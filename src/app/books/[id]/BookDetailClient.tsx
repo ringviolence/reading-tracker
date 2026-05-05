@@ -222,7 +222,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
       <div className="bg-white rounded-lg shadow p-6">
         {isEditing ? (
           <form onSubmit={handleEditBook} className="space-y-4">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Edit Book</h2>
+            <h2 className="text-lg font-semibold text-ink mb-4">Edit Book</h2>
             <div>
               <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
                 Title *
@@ -233,7 +233,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                 name="title"
                 required
                 defaultValue={book.title}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
               />
             </div>
             <div>
@@ -245,7 +245,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                 id="subtitle"
                 name="subtitle"
                 defaultValue={book.subtitle || ''}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
               />
             </div>
             <div>
@@ -258,7 +258,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                 name="author"
                 required
                 defaultValue={book.author}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
               />
             </div>
             <div>
@@ -270,7 +270,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                 name="genre"
                 required
                 defaultValue={book.genre}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
               >
                 <optgroup label="Fiction">
                   {ALL_GENRES.slice(0, 8).map((g) => (
@@ -300,7 +300,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                 required
                 min={book.currentPage || 1}
                 defaultValue={book.totalPages}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
               />
             </div>
             <div>
@@ -312,7 +312,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                 id="isbn"
                 name="isbn"
                 defaultValue={book.isbn || ''}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
               />
             </div>
             <div>
@@ -324,7 +324,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                 id="coverImage"
                 name="coverImage"
                 defaultValue={book.coverImage || ''}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
                 placeholder="https://..."
               />
             </div>
@@ -332,7 +332,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
               <button
                 type="submit"
                 disabled={isSaving}
-                className="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:opacity-50"
+                className="px-5 py-2 bg-forest text-white rounded-lg hover:bg-forest-dark transition-colors font-medium disabled:opacity-50"
               >
                 {isSaving ? 'Saving...' : 'Save Changes'}
               </button>
@@ -359,13 +359,13 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                       onError={() => setImgError(true)}
                     />
                   ) : (
-                    <div className="w-20 h-28 bg-gradient-to-br from-blue-400 to-purple-500 rounded flex items-center justify-center">
+                    <div className="w-20 h-28 bg-gradient-to-br from-sky to-lavender rounded flex items-center justify-center">
                       <span className="text-white text-3xl font-bold">{book.title[0]}</span>
                     </div>
                   );
                 })()}
                 <div>
-                  <h1 className="text-2xl font-bold text-gray-900">{book.title}</h1>
+                  <h1 className="text-2xl font-bold text-ink">{book.title}</h1>
                   {book.subtitle && (
                     <p className="text-gray-500">{book.subtitle}</p>
                   )}
@@ -386,7 +386,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
             <div className="mt-4">
               {book.status === 'COMPLETED' ? (
                 <div className="flex items-center gap-3">
-                  <span className="inline-block px-3 py-1 bg-green-100 text-green-700 text-sm rounded-full font-medium">
+                  <span className="inline-block px-3 py-1 bg-sage text-forest text-sm rounded-full font-medium">
                     Completed
                   </span>
                   {book.completedAt && (
@@ -400,7 +400,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                   current={book.currentPage}
                   total={book.totalPages}
                   label="Reading Progress"
-                  color="bg-blue-500"
+                  color="bg-forest"
                 />
               )}
             </div>
@@ -410,9 +410,19 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
 
       {/* Reading Sessions Section */}
       <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">
-          Reading Sessions ({book.sessions.length})
-        </h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-ink">
+            Reading Sessions ({book.sessions.length})
+          </h2>
+          {book.status === 'READING' && (
+            <Link
+              href={`/log?bookId=${book.id}`}
+              className="px-3 py-1.5 text-sm bg-forest text-white rounded-lg hover:bg-forest-dark transition-colors font-medium"
+            >
+              Log reading
+            </Link>
+          )}
+        </div>
         {book.sessions.length === 0 ? (
           <p className="text-gray-500 text-center py-4">No reading sessions logged yet.</p>
         ) : (
@@ -437,11 +447,11 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                             type="date"
                             value={editingDate}
                             onChange={(e) => setEditingDate(e.target.value)}
-                            className="px-2 py-1 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                            className="px-2 py-1 border border-gray-300 rounded text-sm focus:ring-2 focus:ring-forest focus:border-forest"
                           />
                           <button
                             onClick={() => handleEditSessionDate(session.id)}
-                            className="text-blue-500 hover:text-blue-700 text-xs font-medium"
+                            className="text-forest hover:text-forest-dark text-xs font-medium"
                           >
                             Save
                           </button>
@@ -458,7 +468,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                             setEditingSessionId(session.id);
                             setEditingDate(toInputDate(session.date));
                           }}
-                          className="text-gray-900 hover:text-blue-500 transition-colors"
+                          className="text-ink hover:text-blue-500 transition-colors"
                           title="Click to edit date"
                         >
                           {formatDate(session.date)}
@@ -468,10 +478,10 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                     <td className="py-3 pr-4 text-gray-600">
                       {session.startPage} &rarr; {session.endPage}
                     </td>
-                    <td className="py-3 pr-4 text-right text-gray-900">
+                    <td className="py-3 pr-4 text-right text-ink">
                       {session.pagesRead}
                     </td>
-                    <td className="py-3 pr-4 text-right text-gray-900">
+                    <td className="py-3 pr-4 text-right text-ink">
                       {session.pointsEarned}
                     </td>
                     <td className="py-3 text-right">

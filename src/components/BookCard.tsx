@@ -46,17 +46,17 @@ export default function BookCard({
             onError={() => setImgError(true)}
           />
         ) : (
-          <div className="w-16 h-24 bg-gradient-to-br from-blue-400 to-purple-500 rounded flex items-center justify-center">
+          <div className="w-16 h-24 bg-gradient-to-br from-sky to-lavender rounded flex items-center justify-center">
             <span className="text-white text-2xl font-bold">{title[0]}</span>
           </div>
         )}
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-gray-900 truncate">{title}</h3>
+          <h3 className="font-semibold text-ink truncate">{title}</h3>
           {subtitle && <p className="text-sm text-gray-500 truncate">{subtitle}</p>}
           <p className="text-sm text-gray-600 truncate">{author}</p>
           <p className="text-xs text-gray-400 mt-1">{genreLabel}</p>
           {isCompleted ? (
-            <span className="inline-block mt-2 px-2 py-1 bg-green-100 text-green-700 text-xs rounded">
+            <span className="inline-block mt-2 px-2 py-1 bg-sage text-forest text-xs rounded">
               Completed
             </span>
           ) : (
@@ -65,7 +65,7 @@ export default function BookCard({
                 current={currentPage}
                 total={totalPages}
                 size="sm"
-                color="bg-blue-500"
+                color="bg-forest"
               />
             </div>
           )}

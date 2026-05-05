@@ -27,23 +27,23 @@ export default async function BooksPage() {
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold text-gray-900">My Books</h1>
+        <h1 className="text-3xl font-bold text-ink">My Books</h1>
         <Link
           href="/books/new"
-          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium"
+          className="px-6 py-3 bg-forest text-white rounded-lg hover:bg-forest-dark transition-colors font-medium"
         >
           Add Book
         </Link>
       </div>
 
       <section>
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+        <h2 className="text-xl font-semibold text-ink mb-4">
           Currently Reading ({currentlyReading.length})
         </h2>
         {currentlyReading.length === 0 ? (
           <div className="bg-white rounded-lg shadow p-8 text-center text-gray-500">
             <p>No books in progress.</p>
-            <Link href="/books/new" className="text-blue-500 hover:underline">
+            <Link href="/books/new" className="text-forest hover:underline">
               Add your first book
             </Link>
           </div>
@@ -70,7 +70,7 @@ export default async function BooksPage() {
 
       {completed.length > 0 && (
         <section>
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <h2 className="text-xl font-semibold text-ink mb-4">
             Completed ({completed.length})
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

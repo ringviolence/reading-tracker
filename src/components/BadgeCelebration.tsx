@@ -47,7 +47,7 @@ export default function BadgeCelebration({ badge, onClose }: BadgeCelebrationPro
           {badge.tier === 'platinum' && '💎'}
         </div>
 
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Badge Earned!</h2>
+        <h2 className="text-2xl font-bold text-ink mb-2">Badge Earned!</h2>
 
         <div className={`inline-block px-4 py-2 rounded-full mb-4 ${colors.bg} ${colors.text}`}>
           <span className="font-semibold capitalize">{badge.tier}</span>
@@ -59,7 +59,7 @@ export default function BadgeCelebration({ badge, onClose }: BadgeCelebrationPro
 
         <button
           onClick={onClose}
-          className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+          className="px-6 py-2 bg-forest text-white rounded-lg hover:bg-forest-dark transition-colors"
         >
           Awesome!
         </button>

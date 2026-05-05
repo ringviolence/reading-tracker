@@ -53,7 +53,7 @@ export default function NewBookPage() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Add New Book</h1>
+      <h1 className="text-3xl font-bold text-ink mb-8">Add New Book</h1>
 
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
@@ -71,7 +71,7 @@ export default function NewBookPage() {
             id="title"
             name="title"
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
             placeholder="Enter book title"
           />
         </div>
@@ -84,7 +84,7 @@ export default function NewBookPage() {
             type="text"
             id="subtitle"
             name="subtitle"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
             placeholder="Enter subtitle"
           />
         </div>
@@ -98,7 +98,7 @@ export default function NewBookPage() {
             id="author"
             name="author"
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
             placeholder="Enter author name"
           />
         </div>
@@ -111,7 +111,7 @@ export default function NewBookPage() {
             id="genre"
             name="genre"
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
           >
             <option value="">Select a genre</option>
             <optgroup label="Fiction">
@@ -148,7 +148,7 @@ export default function NewBookPage() {
             name="totalPages"
             required
             min="1"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
             placeholder="Enter total pages"
           />
         </div>
@@ -161,7 +161,7 @@ export default function NewBookPage() {
             type="text"
             id="isbn"
             name="isbn"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
             placeholder="Enter ISBN"
           />
         </div>
@@ -174,7 +174,7 @@ export default function NewBookPage() {
             type="url"
             id="coverImage"
             name="coverImage"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
             placeholder="https://..."
           />
         </div>
@@ -183,7 +183,7 @@ export default function NewBookPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="flex-1 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 px-6 py-3 bg-forest text-white rounded-lg hover:bg-forest-dark transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isSubmitting ? 'Adding...' : 'Add Book'}
           </button>
