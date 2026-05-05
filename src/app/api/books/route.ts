@@ -4,19 +4,13 @@ import { getCurrentUser } from '@/lib/auth';
 
 export async function GET(request: NextRequest) {
   const user = await getCurrentUser();
-
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { searchParams } = new URL(request.url);
   const status = searchParams.get('status');
 
   const books = await prisma.book.findMany({
-    where: {
-      userId: user.id,
-      ...(status ? { status } : {}),
-    },
+    where: { userId: user.id, ...(status ? { status } : {}) },
     orderBy: { createdAt: 'desc' },
   });
 
@@ -25,19 +19,16 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser();
-
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   try {
     const body = await request.json();
-    const { title, subtitle, author, genre, totalPages, isbn, coverImage } = body;
+    const { title, subtitle, author, genre, language, totalPages, isbn, coverImage } = body;
 
-    if (!title || !author || !genre || !totalPages) {
+    if (!title || !author || !genre || !language || !totalPages) {
       return NextResponse.json(
-        { error: 'Missing required fields: title, author, genre, totalPages' },
-        { status: 400 }
+        { error: 'Missing required fields: title, author, genre, language, totalPages' },
+        { status: 400 },
       );
     }
 
@@ -48,6 +39,7 @@ export async function POST(request: NextRequest) {
         subtitle: subtitle || null,
         author,
         genre,
+        language,
         totalPages: parseInt(totalPages, 10),
         isbn: isbn || null,
         coverImage: coverImage || null,

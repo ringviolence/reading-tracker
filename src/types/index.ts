@@ -1,5 +1,8 @@
 export type BookStatus = 'READING' | 'COMPLETED';
 
+export const LANGUAGES = ['Bokmål', 'English', 'Nynorsk'] as const;
+export type Language = (typeof LANGUAGES)[number];
+
 export type Genre =
   // Fiction (8)
   | 'LITERARY_FICTION'
@@ -87,36 +90,3 @@ export const OTHER_GENRES: Genre[] = [
 ];
 
 export const ALL_GENRES: Genre[] = [...FICTION_GENRES, ...NON_FICTION_GENRES, ...OTHER_GENRES];
-
-export type BadgeTier = 'bronze' | 'silver' | 'gold' | 'platinum';
-
-export type BadgeCategory =
-  | 'pages_read'
-  | 'books_completed'
-  | 'consistency'
-  | 'genre_diversity'
-  | 'fiction_mastery'
-  | 'nonfiction_mastery'
-  | 'other_mastery';
-
-export interface BadgeDefinition {
-  id: string;
-  category: BadgeCategory;
-  tier: BadgeTier;
-  level: number;
-  threshold: number;
-  name: string;
-  description: string;
-}
-
-export interface UserStats {
-  totalPagesRead: number;
-  totalBooksCompleted: number;
-  currentStreak: number;
-  totalPoints: number;
-  todayPages: number;
-  uniqueGenres: number;
-  fictionBooksCompleted: number;
-  nonfictionBooksCompleted: number;
-  otherBooksCompleted: number;
-}

@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import BadgeCelebration from '@/components/BadgeCelebration';
-import { BadgeDefinition } from '@/types';
+import type { BadgeDefinition } from '@/lib/badges';
 
 interface Book {
   id: string;

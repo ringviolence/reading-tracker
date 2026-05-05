@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { BadgeDefinition, BadgeTier } from '@/types';
+import type { BadgeDefinition, BadgeTier } from '@/lib/badges';
 import { TIER_COLORS } from '@/lib/badges';
 
 interface BadgeCategoryProps {
@@ -29,7 +29,7 @@ export default function BadgeCategory({
     bronze: badges.filter((b) => b.tier === 'bronze'),
     silver: badges.filter((b) => b.tier === 'silver'),
     gold: badges.filter((b) => b.tier === 'gold'),
-    platinum: badges.filter((b) => b.tier === 'platinum'),
+    diamond: badges.filter((b) => b.tier === 'diamond'),
   };
 
   return (
@@ -58,7 +58,7 @@ export default function BadgeCategory({
 
       {isExpanded && (
         <div className="p-4 pt-0 space-y-4">
-          {(['bronze', 'silver', 'gold', 'platinum'] as BadgeTier[]).map((tier) => {
+          {(['bronze', 'silver', 'gold', 'diamond'] as BadgeTier[]).map((tier) => {
             const tierBadges = badgesByTier[tier];
             if (tierBadges.length === 0) return null;
 

@@ -4,63 +4,43 @@ import { getCurrentUser } from '@/lib/auth';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const user = await getCurrentUser();
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { id } = await params;
-
   const book = await prisma.book.findUnique({
     where: { id },
-    include: {
-      sessions: {
-        orderBy: { date: 'desc' },
-      },
-    },
+    include: { sessions: { orderBy: { date: 'desc' } } },
   });
 
-  if (!book) {
-    return NextResponse.json({ error: 'Book not found' }, { status: 404 });
-  }
-
-  if (book.userId !== user.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-  }
+  if (!book) return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+  if (book.userId !== user.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
 
   return NextResponse.json(book);
 }
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const user = await getCurrentUser();
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { id } = await params;
-
   const book = await prisma.book.findUnique({ where: { id } });
-  if (!book) {
-    return NextResponse.json({ error: 'Book not found' }, { status: 404 });
-  }
-
-  if (book.userId !== user.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-  }
+  if (!book) return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+  if (book.userId !== user.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
 
   try {
     const body = await request.json();
-    const { title, subtitle, author, genre, totalPages, isbn, coverImage } = body;
+    const { title, subtitle, author, genre, language, totalPages, isbn, coverImage } = body;
 
-    if (!title || !author || !genre || !totalPages) {
+    if (!title || !author || !genre || !language || !totalPages) {
       return NextResponse.json(
-        { error: 'Missing required fields: title, author, genre, totalPages' },
-        { status: 400 }
+        { error: 'Missing required fields: title, author, genre, language, totalPages' },
+        { status: 400 },
       );
     }
 
@@ -68,7 +48,7 @@ export async function PUT(
     if (totalPagesNum < book.currentPage) {
       return NextResponse.json(
         { error: 'Total pages cannot be less than current reading progress' },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -79,6 +59,7 @@ export async function PUT(
         subtitle: subtitle || null,
         author,
         genre,
+        language,
         totalPages: totalPagesNum,
         isbn: isbn || null,
         coverImage: coverImage || null,
@@ -94,25 +75,16 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   const user = await getCurrentUser();
-  if (!user) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  }
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
   const { id } = await params;
-
   const book = await prisma.book.findUnique({ where: { id } });
-  if (!book) {
-    return NextResponse.json({ error: 'Book not found' }, { status: 404 });
-  }
-
-  if (book.userId !== user.id) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
-  }
+  if (!book) return NextResponse.json({ error: 'Book not found' }, { status: 404 });
+  if (book.userId !== user.id) return NextResponse.json({ error: 'Unauthorized' }, { status: 403 });
 
   await prisma.book.delete({ where: { id } });
-
   return NextResponse.json({ success: true });
 }

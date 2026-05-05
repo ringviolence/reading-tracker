@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ALL_GENRES, GENRE_LABELS, Genre } from '@/types';
+import { ALL_GENRES, GENRE_LABELS, Genre, LANGUAGES } from '@/types';
 
 export default function NewBookPage() {
   const router = useRouter();
@@ -20,6 +20,7 @@ export default function NewBookPage() {
       subtitle: (formData.get('subtitle') as string) || undefined,
       author: formData.get('author') as string,
       genre: formData.get('genre') as string,
+      language: formData.get('language') as string,
       totalPages: parseInt(formData.get('totalPages') as string, 10),
       isbn: (formData.get('isbn') as string) || undefined,
       coverImage: (formData.get('coverImage') as string) || undefined,
@@ -135,6 +136,23 @@ export default function NewBookPage() {
                 </option>
               ))}
             </optgroup>
+          </select>
+        </div>
+
+        <div>
+          <label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-1">
+            Language *
+          </label>
+          <select
+            id="language"
+            name="language"
+            required
+            defaultValue="English"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
+          >
+            {LANGUAGES.map((lang) => (
+              <option key={lang} value={lang}>{lang}</option>
+            ))}
           </select>
         </div>
 

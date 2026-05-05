@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ProgressBar from '@/components/ProgressBar';
-import { ALL_GENRES, GENRE_LABELS, Genre } from '@/types';
+import { ALL_GENRES, GENRE_LABELS, Genre, LANGUAGES } from '@/types';
 
 interface ReadingSession {
   id: string;
@@ -12,7 +12,6 @@ interface ReadingSession {
   startPage: number;
   endPage: number;
   pagesRead: number;
-  pointsEarned: number;
 }
 
 interface Book {
@@ -21,6 +20,7 @@ interface Book {
   subtitle?: string | null;
   author: string;
   genre: string;
+  language: string;
   totalPages: number;
   currentPage: number;
   status: string;
@@ -57,6 +57,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
       subtitle: (formData.get('subtitle') as string) || undefined,
       author: formData.get('author') as string,
       genre: formData.get('genre') as string,
+      language: formData.get('language') as string,
       totalPages: parseInt(formData.get('totalPages') as string, 10),
       isbn: (formData.get('isbn') as string) || undefined,
       coverImage: (formData.get('coverImage') as string) || undefined,
@@ -291,6 +292,22 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
               </select>
             </div>
             <div>
+              <label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-1">
+                Language *
+              </label>
+              <select
+                id="language"
+                name="language"
+                required
+                defaultValue={book.language}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-forest focus:border-forest"
+              >
+                {LANGUAGES.map((lang) => (
+                  <option key={lang} value={lang}>{lang}</option>
+                ))}
+              </select>
+            </div>
+            <div>
               <label htmlFor="totalPages" className="block text-sm font-medium text-gray-700 mb-1">
                 Total Pages *
               </label>
@@ -371,7 +388,7 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                     <p className="text-gray-500">{book.subtitle}</p>
                   )}
                   <p className="text-gray-600 mt-1">by {book.author}</p>
-                  <p className="text-sm text-gray-400 mt-1">{genreLabel}</p>
+                  <p className="text-sm text-gray-400 mt-1">{genreLabel} · {book.language}</p>
                   {book.isbn && (
                     <p className="text-xs text-gray-400 mt-1">ISBN: {book.isbn}</p>
                   )}
@@ -434,7 +451,6 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                   <th className="text-left py-2 pr-4 font-medium text-gray-500">Date</th>
                   <th className="text-left py-2 pr-4 font-medium text-gray-500">Pages</th>
                   <th className="text-right py-2 pr-4 font-medium text-gray-500">Read</th>
-                  <th className="text-right py-2 pr-4 font-medium text-gray-500">Points</th>
                   <th className="text-right py-2 font-medium text-gray-500">Actions</th>
                 </tr>
               </thead>
@@ -481,9 +497,6 @@ export default function BookDetailClient({ book: initialBook }: { book: Book }) 
                     </td>
                     <td className="py-3 pr-4 text-right text-ink">
                       {session.pagesRead}
-                    </td>
-                    <td className="py-3 pr-4 text-right text-ink">
-                      {session.pointsEarned}
                     </td>
                     <td className="py-3 text-right">
                       {deletingSessionId === session.id ? (
