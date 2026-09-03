@@ -169,6 +169,31 @@ export function earnedBadgesForMetrics(metrics: SeasonMetrics): BadgeDefinition[
   );
 }
 
+// Short human hint for what a badge's threshold represents, e.g. "4 weeks".
+const BADGE_HINT: Record<BadgeLine, (n: number) => string> = {
+  pages_turned: (n) => `${n.toLocaleString()} pages`,
+  daily_devotion: (n) => `${n}-day streak`,
+  steady_hand: (n) => `${n} weeks`,
+  polyglot: (n) => `${n} languages`,
+  genre_wanderer: (n) => `${n} genres`,
+  tome_tamer: (n) => `${n}+ page book`,
+  sprint_reader: (n) => `${n} pages/day`,
+};
+
+export function badgeHint(badge: BadgeDefinition): string {
+  return BADGE_HINT[badge.line](badge.threshold);
+}
+
+/** Highest earned badge per line (one per line), highest lines first by tier. */
+export function highestBadgesPerLine(earned: BadgeDefinition[]): BadgeDefinition[] {
+  const best = new Map<BadgeLine, BadgeDefinition>();
+  for (const b of earned) {
+    const cur = best.get(b.line);
+    if (!cur || b.threshold > cur.threshold) best.set(b.line, b);
+  }
+  return Array.from(best.values());
+}
+
 export interface SeasonSummary {
   metrics: SeasonMetrics;
   earnedBadges: BadgeDefinition[];

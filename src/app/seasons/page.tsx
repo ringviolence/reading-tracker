@@ -2,7 +2,8 @@ import { redirect } from 'next/navigation';
 import { prisma } from '@/lib/db';
 import { getCurrentUser } from '@/lib/auth';
 import { getSeasonForDate, seasonKey, type SeasonInfo } from '@/lib/seasons';
-import { summarizeSeason } from '@/lib/badges';
+import { summarizeSeason, badgeHint, highestBadgesPerLine } from '@/lib/badges';
+import { GENRE_LABELS, type Genre } from '@/types';
 import SeasonFeed, { type SeasonCard } from './SeasonFeed';
 
 type SessionRow = { date: Date; pagesRead: number };
@@ -60,6 +61,8 @@ async function getSeasonCards(userId: string): Promise<SeasonCard[]> {
     if (b.completedAt) bucketFor(b.completedAt).books.push(b);
   }
 
+  const TIER_RANK: Record<string, number> = { bronze: 0, silver: 1, gold: 2, diamond: 3 };
+
   const cards: (SeasonCard & { sortKey: number })[] = [];
   for (const { info, sessions: seasonSessions, books } of Array.from(buckets.values())) {
     const summary = summarizeSeason(seasonSessions, books);
@@ -69,12 +72,18 @@ async function getSeasonCards(userId: string): Promise<SeasonCard[]> {
       label: info.label,
       xp: summary.xp,
       level: summary.level,
-      badges: summary.earnedBadges.map((b) => ({
-        id: b.id,
-        name: b.name,
-        icon: b.icon,
-        tier: b.tier,
-      })),
+      pagesRead: summary.metrics.pagesRead,
+      bestDay: summary.metrics.maxPagesInDay,
+      // One chip per badge line (highest tier reached), best first.
+      badges: highestBadgesPerLine(summary.earnedBadges)
+        .sort((a, b) => TIER_RANK[b.tier] - TIER_RANK[a.tier])
+        .map((b) => ({
+          id: b.id,
+          name: b.name,
+          icon: b.icon,
+          tier: b.tier,
+          hint: badgeHint(b),
+        })),
       books: books
         .slice()
         .sort((a, b) => (b.completedAt!.getTime() - a.completedAt!.getTime()))
@@ -82,7 +91,7 @@ async function getSeasonCards(userId: string): Promise<SeasonCard[]> {
           id: b.id,
           title: b.title,
           author: b.author,
-          genre: b.genre,
+          genre: GENRE_LABELS[b.genre as Genre] ?? b.genre,
           totalPages: b.totalPages,
           coverImage: b.coverImage,
         })),

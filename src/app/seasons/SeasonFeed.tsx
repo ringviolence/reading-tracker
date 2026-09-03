@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { getLevelProgress } from '@/lib/levels';
 
 type Tier = 'bronze' | 'silver' | 'gold' | 'diamond';
 
@@ -11,7 +10,9 @@ export interface SeasonCard {
   label: string;
   xp: number;
   level: number;
-  badges: { id: string; name: string; icon: string; tier: Tier }[];
+  pagesRead: number;
+  bestDay: number;
+  badges: { id: string; name: string; icon: string; tier: Tier; hint: string }[];
   books: {
     id: string;
     title: string;
@@ -28,6 +29,15 @@ const TIER_CHIP: Record<Tier, string> = {
   gold: 'bg-yellow-100 text-yellow-700 border-yellow-300',
   diamond: 'bg-purple-100 text-purple-700 border-purple-300',
 };
+
+function Stat({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div className="rounded-lg bg-white/50 p-3">
+      <p className="text-xs font-semibold uppercase tracking-wide text-ink/50">{label}</p>
+      <div className="mt-1 text-ink">{children}</div>
+    </div>
+  );
+}
 
 const PAGE_SIZE = 4;
 
@@ -56,35 +66,27 @@ export default function SeasonFeed({ seasons }: { seasons: SeasonCard[] }) {
 }
 
 function SeasonCardView({ season }: { season: SeasonCard }) {
-  const progress = getLevelProgress(season.xp);
-
   return (
     <section
       data-season={season.name}
       className="rounded-xl border-2 border-forest bg-sage p-6 shadow-sm"
     >
-      {/* Header */}
-      <div className="flex items-start justify-between gap-4 mb-4">
-        <div>
-          <h2 className="text-2xl font-bold text-ink capitalize">{season.label}</h2>
-          <p className="text-sm text-ink/60">Level {season.level}</p>
-        </div>
-        <span className="text-xl font-bold text-forest whitespace-nowrap">
-          {season.xp.toLocaleString()} XP
-        </span>
-      </div>
-
-      {/* XP bar */}
-      <div className="mb-5">
-        <div className="w-full bg-white/50 rounded-full h-2">
-          <div
-            className="bg-forest h-2 rounded-full transition-all"
-            style={{ width: `${progress.percentage}%` }}
-          />
-        </div>
-        <p className="text-xs text-ink/50 mt-1">
-          {progress.xpIntoLevel} / {progress.xpForThisLevel} XP to level {progress.level + 1}
-        </p>
+      {/* Stat grid: 4-across, 2x2 on mobile */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+        <Stat label="Season">
+          <span className="text-lg font-bold capitalize">{season.label}</span>
+        </Stat>
+        <Stat label="Level">
+          <span className="text-lg font-bold">Level {season.level}</span>
+          <span className="text-ink/60 text-sm"> ({season.xp.toLocaleString()} XP)</span>
+        </Stat>
+        <Stat label="Pages read">
+          <span className="text-lg font-bold">{season.pagesRead.toLocaleString()}</span>
+        </Stat>
+        <Stat label="Best single day">
+          <span className="text-lg font-bold">{season.bestDay.toLocaleString()}</span>
+          <span className="text-ink/60 text-sm"> pages</span>
+        </Stat>
       </div>
 
       {/* Badges */}
@@ -101,7 +103,7 @@ function SeasonCardView({ season }: { season: SeasonCard }) {
                 title={`${b.tier} · ${b.name}`}
               >
                 <span>{b.icon}</span>
-                {b.name}
+                {b.name} <span className="opacity-70">({b.hint})</span>
               </span>
             ))}
           </div>
