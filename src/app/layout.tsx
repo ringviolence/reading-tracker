@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getCurrentUser } from '@/lib/auth';
+import { getCurrentSeason } from '@/lib/seasons';
 import LogoutButton from '@/components/LogoutButton';
 import './globals.css';
 
@@ -15,9 +16,10 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const user = await getCurrentUser();
+  const season = getCurrentSeason();
 
   return (
-    <html lang="en">
+    <html lang="en" data-season={season.name}>
       <body className="bg-sage min-h-screen">
         <nav className="bg-forest shadow-sm">
           <div className="max-w-6xl mx-auto px-4">
@@ -32,6 +34,9 @@ export default async function RootLayout({
                   </Link>
                   <Link href="/badges" className="text-white/80 hover:text-white">
                     Badges
+                  </Link>
+                  <Link href="/seasons" className="text-white/80 hover:text-white">
+                    Seasons
                   </Link>
                   <div className="flex items-center gap-3 ml-4 pl-4 border-l border-white/20">
                     <span className="text-sm text-white/70 hidden sm:inline">

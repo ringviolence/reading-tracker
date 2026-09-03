@@ -163,6 +163,38 @@ export function computeSeasonMetrics(
   };
 }
 
+export function earnedBadgesForMetrics(metrics: SeasonMetrics): BadgeDefinition[] {
+  return BADGE_DEFINITIONS.filter(
+    (b) => getMetricValue(b.line, metrics) >= b.threshold,
+  );
+}
+
+export interface SeasonSummary {
+  metrics: SeasonMetrics;
+  earnedBadges: BadgeDefinition[];
+  xp: number;
+  level: number;
+}
+
+/**
+ * Compute a full season recap (metrics, earned badges, XP, level) purely from
+ * raw reading data — no stored Season/SeasonProgress/BadgeAward rows needed.
+ * This powers the historical season overview; the stored tables remain the
+ * source of truth only for the live season (awarding + notifications).
+ */
+export function summarizeSeason(
+  sessions: { date: Date; pagesRead: number }[],
+  completedBooks: { language: string; genre: string; totalPages: number }[],
+): SeasonSummary {
+  const metrics = computeSeasonMetrics(sessions, completedBooks);
+  const earnedBadges = earnedBadgesForMetrics(metrics);
+  const badgeXp = earnedBadges.reduce((sum, b) => sum + b.xpGranted, 0);
+  const pageXp = sessions.reduce((sum, s) => sum + s.pagesRead, 0);
+  const completionXp = completedBooks.length * 50;
+  const xp = pageXp + completionXp + badgeXp;
+  return { metrics, earnedBadges, xp, level: computeLevel(xp) };
+}
+
 export function getNextBadge(
   earnedBadgeIds: string[],
   metrics: SeasonMetrics,
@@ -208,13 +240,9 @@ export async function refreshSeasonProgress(
   const metrics = computeSeasonMetrics(sessions, completedBooks);
   const awardedIds = new Set(existingAwards.map((a) => a.badgeId));
 
-  const newBadges: BadgeDefinition[] = [];
-  for (const badge of BADGE_DEFINITIONS) {
-    if (awardedIds.has(badge.id)) continue;
-    if (getMetricValue(badge.line, metrics) >= badge.threshold) {
-      newBadges.push(badge);
-    }
-  }
+  const newBadges = earnedBadgesForMetrics(metrics).filter(
+    (b) => !awardedIds.has(b.id),
+  );
 
   if (newBadges.length > 0) {
     await prisma.badgeAward.createMany({

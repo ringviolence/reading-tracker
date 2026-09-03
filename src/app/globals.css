@@ -2,14 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* Season: Spring */
+/*
+ * Seasonal palettes. The active palette is chosen by the `data-season`
+ * attribute — set on <html> (whole app follows the current real-world season)
+ * and overridden per-card on the season overview so each recap paints in its
+ * own season's colors. :root defaults to spring as a fallback.
+ */
+:root,
+[data-season='spring'] {
   --color-sage: #E7EFD2;
   --color-forest: #5B7553;
   --color-forest-dark: #4a6044;
   --color-ink: #0A210F;
   --color-sky: #C5EAFB;
   --color-lavender: #CFBAE1;
+}
+
+[data-season='summer'] {
+  --color-sage: #FBF4D9;
+  --color-forest: #4E9E5B;
+  --color-forest-dark: #3D7D47;
+  --color-ink: #14260F;
+  --color-sky: #FFE1A8;
+  --color-lavender: #F4B6A0;
+}
+
+[data-season='autumn'] {
+  --color-sage: #F6EBDA;
+  --color-forest: #9C5A2C;
+  --color-forest-dark: #7C4622;
+  --color-ink: #2A1608;
+  --color-sky: #E8B44A;
+  --color-lavender: #C97B4A;
+}
+
+[data-season='winter'] {
+  --color-sage: #EAF0F4;
+  --color-forest: #3E5C6E;
+  --color-forest-dark: #30485A;
+  --color-ink: #0E1B24;
+  --color-sky: #BCD9EC;
+  --color-lavender: #C9C3DE;
 }
 
 body {

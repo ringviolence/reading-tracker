@@ -8,6 +8,11 @@ export interface SeasonInfo {
   label: string;
 }
 
+/** Stable identifier for a season, e.g. "2026-spring". */
+export function seasonKey(info: { year: number; name: SeasonName }): string {
+  return `${info.year}-${info.name}`;
+}
+
 function isLeapYear(year: number): boolean {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
